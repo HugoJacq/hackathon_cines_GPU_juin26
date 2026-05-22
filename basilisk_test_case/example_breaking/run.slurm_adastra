@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#SBATCH --account=hmg2840
+#SBATCH --job-name=breaking
+#SBATCH --constraint=MI250
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=00:10:00
+
+case="cpu"
+case="gpu"
+
+module purge
+
+# Version de l'environnement Cray
+module load cpe/24.07
+
+if [case=="cpu"]; then
+	# CPU seulement
+	module load craype-x86-trento
+elif [case=="gpu"]; then
+	# Architecture cible : MI250X (gfx90a) + CPU Trento
+	module load craype-accel-amd-gfx90a craype-x86-trento
+else
+	echo "bad case"
+fi
+
+# Compilateur Cray
+module load PrgEnv-cray
+
+# Librairies ROCm/HIP
+module load amd-mixed
+
+NAME=breaking_nobview.$case
+
+# run
+srun --mpi=pmi2 $NAME 2> log > out
