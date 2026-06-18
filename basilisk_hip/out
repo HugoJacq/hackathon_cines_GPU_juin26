@@ -1,0 +1,25 @@
+
+# Multigrid (hip), 1902 steps, 83.783 CPU, 84.76 real, 5.88e+06 points.step/s, 11 var
+   calls    total     self   % total   function
+    3841    49.90    28.87     34.1%   mg_cycle():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/poisson.h:0
+  341001    18.61    18.61     22.0%   boundary_internal():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../cartesian-common.h:0
+    1903    15.21    14.32     16.9%   tracer_fluxes():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/bcg.h:0
+    1903    64.07    13.31     15.7%   mg_solve():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/poisson.h:0
+      12     3.19     3.19      3.8%   load_shader():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../gpu/grid.h:0
+    1903    66.57     2.25      2.7%   velocity_0():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/navier-stokes/stream.h:0
+    1903     1.91     1.67      2.0%   velocity():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/advection.h:0
+    5744     3.70     1.65      1.9%   multigrid_restriction():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../multigrid-common.h:0
+    1903    16.23     0.76      0.9%   advection():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/bcg.h:0
+  358200     0.08     0.08      0.1%   gpu_cpu_sync():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../gpu/grid.h:0
+       2     0.04     0.04      0.0%   output_ppm():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/output.h:0
+       1    84.76     0.00      0.0%   run():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/run.h:0
+       1     0.00     0.00      0.0%   init_0():turbulence.c:0
+    1903    64.07     0.00      0.0%   poisson():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/poisson.h:0
+    1903    16.23     0.00      0.0%   tracer_advection():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/tracer.h:0
+      12     0.00     0.00      0.0%   build_shader():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../gpu/grid.h:0
+      12     3.19     0.00      0.0%   setup_shader():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../gpu/grid.h:0
+      12     3.19     0.00      0.0%   compile_shader():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/hip/../gpu/grid.h:0
+       1     0.00     0.00      0.0%   defaults_1():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/navier-stokes/stream.h:0
+       1     0.02     0.00      0.0%   snap_ini():turbulence.c:0
+       1     0.00     0.00      0.0%   defaults():/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/run.h:0
+       1     0.02     0.00      0.0%   snap_end():turbulence.c:0

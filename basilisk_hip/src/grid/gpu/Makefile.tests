@@ -1,0 +1,20 @@
+# Automatically generated using 'make Makefile.tests'
+# DO NOT EDIT, edit 'Makefile' instead
+ALLTESTS = \
+	errors.c \
+	glad.c \
+	opengl.c \
+	reduction.c \
+
+TESTS = \
+
+SPECIAL_TESTS = \
+
+ALLPAGES = \
+	errors.c.page \
+	glad.c.page \
+	glad.h.page \
+	grid.h.page \
+	opengl.c.page \
+	output.h.page \
+

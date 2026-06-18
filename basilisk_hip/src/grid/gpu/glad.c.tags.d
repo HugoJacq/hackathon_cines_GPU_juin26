@@ -1,0 +1,21 @@
+glad.c.tags:	\
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/quadtree.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/tree.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/mempool.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/memindex/virtual.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/layers.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/foreach_cell.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/neighbors.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/variables.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/tree-common.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/tree-mpi.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/balance.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/multigrid-common.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/variables.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/cartesian-common.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/events.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/fpe.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/grid/stencils.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/khash.h \
+	/lus/home/CT2B/cad16450/atsetoglou/basilisk/src/common.h \
+
