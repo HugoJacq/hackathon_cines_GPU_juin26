@@ -25,9 +25,6 @@ robustness and a degree of realism even for this complex case. */
 /**
 GPUs and bview are not compatible yet. */
 
-#if 0
-# include "view.h"
-#endif
 
 /**
 The initial conditions are given by the wave steepness $ak$ and the
@@ -67,7 +64,7 @@ int main()
 The initial conditions for the free-surface and velocity are given by
 the third-order Stokes solution. */
 
-#include "../test/stokes.h"
+#include "stokes.h"
 
 event init (i = 0)
 {
@@ -119,20 +116,6 @@ plot [0:6]'log' u 1:2 w l t 'kinetic', '' u 1:3 w l t 'potential', \
 ~~~
 */
 
-event logfile (i++; t <= 8.*T0)
-{
-  double ke = 0., gpe = 0.;
-  foreach (reduction(+:ke) reduction(+:gpe)) {
-    foreach_layer() {
-      double norm2 = sq(w[]);
-      foreach_dimension()
-	norm2 += sq(u.x[]);
-      ke += norm2*h[]*dv();
-    }
-    gpe += sq(eta[])*dv();
-  }
-  fprintf (stderr, "%g %g %g\n", t/T0, ke/2., g_*gpe/2.);
-}
 
 /**
 And generate the movie of the free surface (this is quite
@@ -141,22 +124,13 @@ expensive). The movie is 45 seconds at 25 frames/second.
 Since GPUs and bview are not compatible yet, we replace 3D with 2D
 outputs when running on GPUs. */
 
-event movie (t += 8.*T0/(45*25))
-{
-#if 0 
-  view (fov = 17.3106, quat = {0.475152,0.161235,0.235565,0.832313},
-	tx = -0.0221727, ty = -0.0140227, width = 1200, height = 768);
-  char s[80];
-  sprintf (s, "t = %.2f T0", t/T0);
-  draw_string (s, size = 80);
-  for (double x = -1; x <= 1; x++)
-    translate (x)
-      squares ("u29.x", linear = true, z = "eta", min = -0.15, max = 0.6);
-  save ("movie.mp4");
-#else // _GPU
-  vector u = lookup_vector ("u29");
-  output_ppm (u.x, file = "movie.mp4", linear = true, min = -0.15, max = 0.6, n = 512);
-#endif // _GPU
+event snap_ini (t=0) {
+   vector u = lookup_vector ("u29");
+  output_ppm (u.x, min = -0.3, max = 0.3, file = "ux_ini");
+}
+event snap_end (t=T0) {
+   vector u = lookup_vector ("u29");
+  output_ppm (u.x, min = -0.3, max = 0.3, file = "ux_end");
 }
 
 /**

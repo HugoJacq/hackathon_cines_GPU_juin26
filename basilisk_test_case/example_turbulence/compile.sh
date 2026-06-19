@@ -1,0 +1,33 @@
+
+module purge
+
+source $HOME/.env_bas
+
+module list
+
+#ln -sf $ROCM_PATH/lib/libamdhip64.so libamdhip64.so.6 # fixme
+#export LD_LIBRARY_PATH=${BASILISK}:$LD_LIBRARY_PATH
+#echo $LD_LIBRARY_PATH
+
+LIBHIP=$BASILISK/grid/hip
+LIBGPU=$BASILISK/grid/gpu
+
+# libhip, libamdhip64 and libhiprtc are linked with the autolink pragma in cartesian.h
+
+ln -sf turbulence_benchmark.c turbulence.c
+NAME=turbulence
+DEVICE=gfx90a
+
+
+# generate source file
+$BASILISK/qcc -g -Wall -pipe -D_FORTIFY_SOURCE=2 -O2 -nolineno -disable-dimensions -source -grid=hip/multigrid -DTRACE=2 -DBENCHMARK=1 -DPRINTNSHADERS $NAME.c
+
+export LD_LIBRARY_PATH=$ROCM_PATH/lib:$LD_LIBRARY_PATH
+
+hipcc --offload-arch=$DEVICE -Wall -g -O0 --std=c99 -D_XOPEN_SOURCE=700 -D_GNU_SOURCE \
+        _$NAME.c -o $NAME.hip \
+	-L$LIBGPU -lerrors -L$LIBHIP -lhip -lhiprtc \
+	-lm > logs.compile
+
+
+
