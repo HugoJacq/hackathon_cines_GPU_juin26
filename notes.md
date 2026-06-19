@@ -55,9 +55,15 @@ exemple 1 : le gpu n'est pas utilisé. Voir le fichier
 exemple 2 : le gpu est utilisé. Voir le fichier
 LIEN
 
+Attention: lors du premier run, il y a une compilation des shaders. Il y a donc
+un overhead assez important. Pour avoir une mesure de perf, il faut le refaire
+tourner une deuxième fois (donc par exemple une première fois en basse
+résolution puis on augmente ensuite)
+
 ## Pistes d'amélioration
 
-- beaucoup de copies
+- beaucoup de copies (Memcpy), à réduire
+- multi GPU par mpi + transfers device to device
 
 ## Rapport Claude code
 
