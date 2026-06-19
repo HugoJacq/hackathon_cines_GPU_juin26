@@ -1,8 +1,8 @@
 # hackathon_cines_GPU_juin26
 
-## See the results
+## My notes and conclusions
 
-this [file](notes.md)
+See this [file](notes.md)
 
 ## Other
 

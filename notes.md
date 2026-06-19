@@ -2,6 +2,8 @@
 
 ## Résumé
 
+Ce qui a été fait
+
 1) trouver les bon modules et flags pour compiler un program qui appelle la lib
 `rocm` -> voir les fichiers de compile basilisk (qcc, liberrors.a, libhip.a,
 voir ce [fichier](compile_bas) et compile d'un programme (voir ce
@@ -11,6 +13,16 @@ voir ce [fichier](compile_bas) et compile d'un programme (voir ce
 soient correctement reconnues par le gpu amd (modification de
 `src/grid/hip/hip.c`), ii) que la partie hip de Basilisk
 se rattache au reste (modification de `src/grid/gpu/grid.h`)
+
+Les pistes pour la suite
+
+- l'exemple breaking.c crash avec `breaking.hip: hip.c:574: post_setup_shader:
+Assertion false failed.`, est-ce un problème avec l'extension avec des couches ?
+
+- profiler proprement un run sur gpu AMD. Est-on loin de la roofline ?
+
+- le multigpu n'est pas forcement la panacée vu que je cherche plutot à faire
+plus de pas de temps, et pas des domaines plus grands.
 
 ## Notes Hugo
 
@@ -62,9 +74,9 @@ résolution puis on augmente ensuite)
 
 ## Pistes d'amélioration
 
-- beaucoup de copies (Memcpy), à réduire
-- multi GPU par mpi + transfers device to device
+- beaucoup de copies (Memcpy), à réduire ?
+- multi GPU par mpi + transfers device to device ?
 
 ## Rapport Claude code
 
-voir LIEN
+voir ce [fichier](basilisk_hip/HIP_AMD_PORT_REPORT.md)
