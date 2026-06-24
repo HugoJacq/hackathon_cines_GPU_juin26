@@ -1,0 +1,96 @@
+rocprof-compute:
+- profile les compteurs hardware et/ou roofline d'un ou plusieurs kernels sur le GPU
+- équivalent de nsight compute pour Nvidia
+- profiling en 1 étape 
+- 2 sorties possible
+- CONTRAINTES:
+  - 1 SEUL RANG MPI
+  - CAS TEST REPRESENTATIF MAIS AVEC RUNTIME COURT car redemarrage du run de 7 à 10 fois!!!!!
+
+module à loader obligatoirement : rocm/xx.yy.zz (le même qui a servi à compiler le binaire et au moins rocm/7.x.x) et cray-python
+
+pre-test du profiler rocprof-compute :
+--------------------------------------
+
+module load rocm cray-python
+rocprof-compute --help
+si réponse : manque des packages python alors faire
+
+pip install --target python_packages -r requirements.txt
+
+avec requirements.txt :
+astunparse==1.6.2
+colorlover
+dash>=1.12.0
+matplotlib
+numpy==1.23.0
+pandas>=1.4.3
+pymongo
+pyyaml
+tabulate
+tqdm
+dash-svg
+dash-bootstrap-components
+kaleido==0.2.1
+setuptools
+plotille
+
+devrait régler le pb.
+
+1) pour un roofline :
+---------------------
+
+export PYTHONPATH=python_packages:$PYTHONPATH
+srun -n 1 rocprof-compute profile -n roofline --roof-only --kernel-names -- mon_binaire binaire_args
+
+visualization:
+récupérer sur son laptop (via un scp) dans le repertoire workloads/roofline/MI200 
+- les fichiers empirRoof_gpu-0_fp32_fp64.pdf, empirRoof_gpu-0_int8_fp16.pdf contenant les roofline f64 et int8 
+- le fichier kernelName_legend.pdf contenant la légende des 2 pdf précédents (symbol utilize pour chaque kernel)
+
+2) pour les hardware compteurs des kernels sur le GPU :
+--------------------------------------------------------
+a) données agrégées pour TOUS LES KERNELS : 
+--------------------------------------------
+
+export PYTHONPATH=python_packages:$PYTHONPATH
+srun -n 1 rocprof-compute profile -n counters --no-roof -- mon_binaire binaire_args
+rocprof-compute analyze -p workloads/counters/MI200/ > output_counters_analyze
+
+sortie : 
+--------
+fichier texte output_counters_analyze
+
+b) pour une sortie pour 1 SEUL KERNEL:
+---------------------------------------
+
+export PYTHONPATH=python_packages:$PYTHONPATH
+srun -n 1 rocprof-compute profile -n counters --no-roof -- $BIN_DIR/amrvac
+rocprof-compute analyze -p workloads/counters/MI200/ > output_counters_analyze
+
+dans output_counters_analyze choisir le kernel que l'on veut profiler dans la table 
+0. Top Stats
+0.1 Top Kernels 
+par exemple le premier 0: 
+
+rocprof-compute analyze -p workloads/counters/MI200/ -k 0 > output_counters_analyze_kernel0
+
+A noter dans le fichier output_counters_analyze_kernel0, table 
+0. Top Stats
+0.1 Top Kernels
+
+la colonne supplémentaire à la fin de celle-ci avec une étoile pour le kernel 0.
+
+ 
+A noter : possibilité d'utiliser une GUI pour afficher les sorties en rajoutant --gui à la commande rocprof-compute analyze (JE NE L'AI JAMAIS TESTE!!!)
+
+
+
+ 
+
+
+
+
+
+
+

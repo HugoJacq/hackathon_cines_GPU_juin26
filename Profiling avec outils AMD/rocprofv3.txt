@@ -1,0 +1,44 @@
+rocprofv3:
+- ne profile que l'activité sur le GPU
+- équivalent de nvprof pour Nvidia
+- profiling en 1 seule étape
+- plusieurs sorties possibles
+
+module à loader obligatoirement : rocm/xx.yy.zz (le même qui a servi à compiler le binaire)
+
+1) pour une trace (type timeline):
+----------------------------------
+
+a) commande à lancer dans un fichier batch ou en srun si salloc avant:
+
+srun rocprofv3 --kernel-trace --hip-trace --memory-copy-trace --output-format pftrace -- my_binary binary_args
+
+b) visualisation des resultats :
+
+récupérer sur son laptop (via un scp) le fichier *_results.ptrace dans le répertoire node_name créé pendant le run
+visualiser avec https://ui.perfetto.dev/ dans Chrome -> "Open trace file"
+
+2) pour des fichiers avec données chiffrées:
+--------------------------------------------
+
+srun rocprofv3 --stats --kernel-trace --hip-trace --memory-copy-trace --output-format csv -- my_binary binary_args
+
+pour chaque traces demandées (kernel, hip et memory), 2 fichiers csv créés dans le répertoire node_name (à ouvrir avec éditeur ou excel):
+
+124566_memory_copy_trace.csv
+124566_memory_copy_stats.csv
+124566_kernel_trace.csv
+124566_kernel_stats.csv
+124566_hip_api_trace.csv
+124566_hip_api_stats.csv
+
+le fichier *_trace.csv contient TOUS les appels relatifs à la trace demandée (ex kernel_trace donne TOUS les appels launch pour tous les kernels du run)
+le fichier *_stats.csv contient les statistiques agrégées des appels relatifs à la trace demandée (ex kernel_stats donne les statistics de chaque kernel appelé pendant le run)
+
+pour voir les traces possibles en sortie: 
+-----------------------------------------
+
+rocprofv3 --help
+
+
+

@@ -1,0 +1,36 @@
+rocprof-sys*:
+- profile l'activité sur le CPU ET sur le GPU
+- équivalent de nsight system pour Nvidia
+- profiling en 3 étapes
+- 1 seule sortie possible
+
+module à loader obligatoirement : rocm/xx.yy.zz (le même qui a servi à compiler le binaire et au moins rocm/7.x.x)
+
+etape 1 : configuration
+------------------------
+
+rocprof-sys-avail -G rocprof-sys.cfg --all
+
+créé un fichier rocprof-sys.cfg dans le working directory
+on DOIT faire ensuite 
+export ROCPROFSYS_CONFIG_FILE=./rocprof-sys.cfg
+
+etape 2 : instrumentation du binaire original
+----------------------------------------------
+
+rocprof-sys-instrument -o my_binaire_inst -- my_binaire
+
+créé le fichier my_binaire_inst
+
+etape 3 : run avec le binaire instrumenté
+------------------------------------------
+
+srun rocprof-sys-run -- ./my_binaire_inst binary_args
+
+A noter que les 3 étapes peuvent être faites dans un seule fichier batch mais dans cet ordre.
+
+visualisation des resultats :
+
+récupérer sur son laptop (via un scp) le fichier perfetto-trace-x.proto dans le répertoire rocprofsys-my_binaire_inst-output/date/ créé pendant le run
+visualiser avec https://ui.perfetto.dev/ dans Chrome -> "Open trace file"
+
